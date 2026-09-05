@@ -1,1 +1,11 @@
+<<<<<<< HEAD
 {"name":"cse340","version":"1.0.0","scripts":{"start":"node index.js"},"dependencies":{"dotenv":"^17.4.2","ejs":"^6.0.1","express":"^5.2.1"}}
+=======
+{
+  "name": "cse340",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
+>>>>>>> 4c1c92981e4876d4f8e679defaad329dae31e1c2

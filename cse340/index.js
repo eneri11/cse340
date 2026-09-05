@@ -2,15 +2,12 @@
  * Server.js - Primary file of the application
  ********************************************/
 
-import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
+// ---- Required Modules ----
+const express = require("express");
 const app = express();
+const env = require("dotenv").config();
 const port = process.env.PORT || 5500;
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const path = require("path");
 
 // ---- View Engine and Templates Setup (Step 1) ----
 app.set("view engine", "ejs");
