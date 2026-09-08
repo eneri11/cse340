@@ -7,24 +7,24 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f4f6f8;
+    color: #333333;
+    background-color: #f8fafc;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
 header {
-    background-color: #1e293b;
+    background-color: #0f172a;
     color: #ffffff;
-    padding: 1rem 2rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1.2rem 2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 nav {
     display: flex;
     gap: 2rem;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
 }
 
@@ -32,7 +32,8 @@ nav a {
     color: #cbd5e1;
     text-decoration: none;
     font-weight: 600;
-    transition: color 0.2s;
+    font-size: 1rem;
+    transition: color 0.2s ease;
 }
 
 nav a:hover {
@@ -41,35 +42,81 @@ nav a:hover {
 
 main {
     flex: 1;
-    max-width: 1000px;
+    max-width: 1100px;
     width: 100%;
-    margin: 2rem auto;
-    padding: 2rem;
+    margin: 2.5rem auto;
+    padding: 2.5rem;
     background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 h1 {
-    color: #1e293b;
+    color: #0f172a;
     margin-bottom: 1rem;
-    font-size: 2rem;
+    font-size: 2.2rem;
 }
 
-p {
-    margin-bottom: 1rem;
+p, ul {
+    margin-bottom: 1.2rem;
     color: #475569;
+    font-size: 1.05rem;
+}
+
+ul {
+    padding-left: 1.5rem;
+}
+
+/* Image Styling */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.hero-image {
+    margin-top: 1.5rem;
+}
+
+/* Organizations Grid */
+.org-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.org-card {
+    background: #f1f5f9;
+    padding: 1.2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.org-card img {
+    height: 180px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.org-card h3 {
+    color: #1e293b;
+    font-size: 1.25rem;
 }
 
 footer {
     text-align: center;
     padding: 1.5rem;
-    background-color: #1e293b;
+    background-color: #0f172a;
     color: #94a3b8;
     font-size: 0.9rem;
     margin-top: auto;
 }
 
+/* Mobile Responsive */
 @media (max-width: 768px) {
     nav {
         flex-direction: column;
@@ -77,9 +124,6 @@ footer {
     }
     main {
         margin: 1rem;
-        padding: 1rem;
-    }
-    .org-grid {
-        flex-direction: column;
+        padding: 1.2rem;
     }
 }

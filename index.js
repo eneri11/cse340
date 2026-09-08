@@ -12,14 +12,14 @@ const port = process.env.PORT || 5500;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ---- View Engine and Templates Setup (Step 1) ----
+// ---- Static Files Middleware (Required for CSS & Images) ----
+app.use(express.static(path.join(__dirname, "public")));
+
+// ---- View Engine and Templates Setup ----
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views"));
 
-// ---- Static Files Middleware ----
-app.use(express.static(path.join(__dirname, "public")));
-
-// ---- Routes (Step 4) ----
+// ---- Routes ----
 app.get('/', async (req, res) => {
     const title = 'Home';
     res.render('home', { title });
