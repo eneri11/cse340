@@ -1,15 +1,12 @@
-<%- include('partials/header') %>
+<%- include('partials/header', { title: title }) %>
+
 <main>
-  <h1><%= title %></h1>
-  <h2>Welcome to the CSE 340 Service Network!</h2>
-  <p>
-    Our mission is to promote service across the world by connecting volunteers
-    with service opportunities in their community.
-  </p>
-  <img
-    class="main-logo"
-    src="images/cse340-service-network.png"
-    alt="CSE 340 Service Network Logo"
-  />
+    <h1>Welcome to Community Service Tracker</h1>
+    <p>Empowering local communities through service and collaboration.</p>
+    
+    <div class="hero-image">
+        <img src="/images/home-hero.jpg" alt="Community volunteers working together" style="max-width: 100%; height: auto; border-radius: 8px;">
+    </div>
 </main>
+
 <%- include('partials/footer') %>
