@@ -2,6 +2,7 @@
  * Server.js - Primary file of the application
  ********************************************/
 import { getAllOrganizations } from './src/models/organizations.js';
+import { getAllProjects } from './src/models/projects.js';
 
 import express from 'express';
 import path from 'path';
@@ -34,8 +35,19 @@ app.get('/organizations', async (req, res) => {
 });
 
 app.get('/projects', async (req, res) => {
+  try {
+    const projects = await getAllProjects();
     const title = 'Service Projects';
-    res.render('projects', { title });
+    
+    // Step 6.2: Log to console to verify it works
+    console.log('Fetched projects:', projects);
+
+    // Render the EJS view and send both title and projects data
+    res.render('projects', { title, projects });
+  } catch (err) {
+    console.error('Error fetching projects:', err);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 app.get('/categories', async (req, res) => {
