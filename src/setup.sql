@@ -58,3 +58,44 @@ VALUES
 (3, 'Tech Career Mentorship', 'One-on-one resume reviews and career chats.', 'Pasig', '2026-10-28'),
 (3, 'Open Source Hardware Workshop', 'Building simple automated sensors using microcontrollers.', 'Marikina', '2026-11-04')
 ON CONFLICT DO NOTHING;
+
+
+-- 3. Create the category table
+CREATE TABLE IF NOT EXISTS public.category (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
+);
+
+-- 4 Create the junction table for the many-to-many relationship between projects and categories
+CREATE TABLE IF NOT EXISTS public.project_category (
+    project_id INT NOT NULL,
+    category_id INT NOT NULL,
+    PRIMARY KEY (project_id, category_id),
+    CONSTRAINT fk_project
+        FOREIGN KEY (project_id)
+        REFERENCES public.project(project_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_category
+        FOREIGN KEY (category_id)
+        REFERENCES public.category(category_id)
+        ON DELETE CASCADE
+);
+
+-- 5. Insert sample categories
+INSERT INTO public.category (category_id, name)
+VALUES 
+(1, 'Environment & Conservation'),
+(2, 'Community Welfare & Health'),
+(3, 'Education & Technology')
+ON CONFLICT (category_id) DO NOTHING;
+
+-- 6. Associate projects with categories
+INSERT INTO public.project_category (project_id, category_id)
+VALUES 
+-- Environment projects
+(1, 1), (2, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1),
+-- Health / Welfare projects
+(3, 2), (4, 2), (5, 2),
+-- Education & Tech projects
+(11, 3), (12, 3), (13, 3), (14, 3), (15, 3)
+ON CONFLICT DO NOTHING;
