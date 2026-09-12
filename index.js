@@ -7,19 +7,21 @@ import { getAllCategories } from './src/models/categories.js';
 
 import db from './src/models/db.js';
 
-// Auto-ensure category tables exist on server startup
-async function ensureTablesExist() {
+// Auto-initialize categories table on boot if it doesn't exist
+const initializeDatabase = async () => {
   try {
     await db.query(`
       CREATE TABLE IF NOT EXISTS public.category (
           category_id SERIAL PRIMARY KEY,
           name VARCHAR(255) NOT NULL UNIQUE
       );
+      
       CREATE TABLE IF NOT EXISTS public.project_category (
           project_id INT NOT NULL,
           category_id INT NOT NULL,
           PRIMARY KEY (project_id, category_id)
       );
+
       INSERT INTO public.category (category_id, name)
       VALUES 
       (1, 'Environment & Conservation'),
@@ -27,13 +29,13 @@ async function ensureTablesExist() {
       (3, 'Education & Technology')
       ON CONFLICT (category_id) DO NOTHING;
     `);
-    console.log('Database tables verified/created successfully.');
+    console.log('Categories table and seed data checked/initialized successfully.');
   } catch (err) {
-    console.error('Error auto-creating tables:', err);
+    console.error('Database initialization warning:', err.message);
   }
-}
+};
 
-ensureTablesExist();
+initializeDatabase();
 
 import express from 'express';
 import path from 'path';
