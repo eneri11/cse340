@@ -7,7 +7,7 @@ import { getAllCategories } from './src/models/categories.js';
 
 import db from './src/models/db.js';
 
-// Auto-ensure category tables exist on server start (safe to run multiple times)
+// Auto-ensure category tables exist on server startup
 async function ensureTablesExist() {
   try {
     await db.query(`
