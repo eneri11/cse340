@@ -5,6 +5,35 @@ import { getAllOrganizations } from './src/models/organizations.js';
 import { getAllProjects } from './src/models/projects.js';
 import { getAllCategories } from './src/models/categories.js';
 
+import db from './src/models/db.js';
+
+// Auto-ensure category tables exist on server start (safe to run multiple times)
+async function ensureTablesExist() {
+  try {
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS public.category (
+          category_id SERIAL PRIMARY KEY,
+          name VARCHAR(255) NOT NULL UNIQUE
+      );
+      CREATE TABLE IF NOT EXISTS public.project_category (
+          project_id INT NOT NULL,
+          category_id INT NOT NULL,
+          PRIMARY KEY (project_id, category_id)
+      );
+      INSERT INTO public.category (category_id, name)
+      VALUES 
+      (1, 'Environment & Conservation'),
+      (2, 'Community Welfare & Health'),
+      (3, 'Education & Technology')
+      ON CONFLICT (category_id) DO NOTHING;
+    `);
+    console.log('Database tables verified/created successfully.');
+  } catch (err) {
+    console.error('Error auto-creating tables:', err);
+  }
+}
+
+ensureTablesExist();
 
 import express from 'express';
 import path from 'path';
