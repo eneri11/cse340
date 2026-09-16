@@ -5,23 +5,17 @@
     <p>We work closely with these amazing organizations to deliver community projects.</p>
     
     <div class="org-container">
-        <div class="org-card">
-            <img src="/images/org1.jpg" alt="Green Earth Initiative">
-            <h3>Green Earth Initiative</h3>
-            <p>Focused on local environmental cleanups and tree planting.</p>
-        </div>
-        
-        <div class="org-card">
-            <img src="/images/org2.jpg" alt="Youth Education Fund">
-            <h3>Youth Education Fund</h3>
-            <p>Providing tutoring and school supplies for underprivileged students.</p>
-        </div>
-        
-        <div class="org-card">
-            <img src="/images/org3.jpg" alt="Community Health Outreach">
-            <h3>Community Health Outreach</h3>
-            <p>Hosting wellness camps and health awareness seminars.</p>
-        </div>
+        <% if (organizations && organizations.length > 0) { %>
+            <% organizations.forEach(org => { %>
+                <div class="org-card">
+                    <!-- If you have an image column in your DB, you can use org.image, otherwise use a placeholder or remove it -->
+                    <h3><%= org.name %></h3>
+                    <p><%= org.description %></p>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No partner organizations available at this time.</p>
+        <% } %>
     </div>
 </main>
 
