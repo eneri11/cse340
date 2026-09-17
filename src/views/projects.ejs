@@ -7,14 +7,16 @@
       <% projects.forEach(project => { %>
         <li>
           <% 
-            // Format the date nicely (e.g., October 5, 2026)
             const formattedDate = new Date(project.date).toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
               day: 'numeric'
             });
           %>
-          <%= formattedDate %>: <%= project.title %> (<%= project.organization_name %>)
+          
+          <%= formattedDate %>: 
+          <a href="/project/<%= project.project_id %>"><%= project.title %></a> 
+          (<a href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a>)
         </li>
       <% }) %>
     </ul>

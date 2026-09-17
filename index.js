@@ -1,45 +1,17 @@
 /* ******************************************
  * Server.js - Primary file of the application
  ********************************************/
-import { getAllOrganizations } from './src/models/organizations.js';
-import { getAllProjects } from './src/models/projects.js';
-import { getAllCategories } from './src/models/categories.js';
-
-import db from './src/models/db.js';
-
-// Auto-initialize categories table on boot if it doesn't exist
-const initializeDatabase = async () => {
-  try {
-    await db.query(`
-      CREATE TABLE IF NOT EXISTS public.category (
-          category_id SERIAL PRIMARY KEY,
-          name VARCHAR(255) NOT NULL UNIQUE
-      );
-      
-      CREATE TABLE IF NOT EXISTS public.project_category (
-          project_id INT NOT NULL,
-          category_id INT NOT NULL,
-          PRIMARY KEY (project_id, category_id)
-      );
-
-      INSERT INTO public.category (category_id, name)
-      VALUES 
-      (1, 'Environment & Conservation'),
-      (2, 'Community Welfare & Health'),
-      (3, 'Education & Technology')
-      ON CONFLICT (category_id) DO NOTHING;
-    `);
-    console.log('Categories table and seed data checked/initialized successfully.');
-  } catch (err) {
-    console.error('Database initialization warning:', err.message);
-  }
-};
-
-initializeDatabase();
-
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+// 1. Import your models using ES module imports
+import { getAllOrganizations } from './src/models/organizations.js';
+import { getUpcomingProjects, getProjectDetails } from './src/models/projects.js';
+import { getAllCategories } from './src/models/categories.js';
+
+// Note: Ensure your database client is imported correctly if needed here
+// import db from './src/services/database.js';
 
 const app = express();
 const port = process.env.PORT || 5500;
@@ -47,12 +19,15 @@ const port = process.env.PORT || 5500;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ---- Static Files Middleware (Required for CSS & Images) ----
+// ---- Static Files Middleware ----
 app.use(express.static(path.join(__dirname, "public")));
 
 // ---- View Engine and Templates Setup ----
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views"));
+
+// ---- Constants ----
+const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
 // ---- Routes ----
 app.get('/', async (req, res) => {
@@ -67,18 +42,36 @@ app.get('/organizations', async (req, res) => {
     res.render('organizations', { title, organizations });
 });
 
+// Updated /projects route using getUpcomingProjects and the constant
 app.get('/projects', async (req, res) => {
   try {
-    const projects = await getAllProjects();
-    const title = 'Service Projects';
+    const projects = await getUpcomingProjects(NUMBER_OF_UPCOMING_PROJECTS);
+    const title = 'Upcoming Service Projects';
     
-    // Step 6.2: Log to console to verify it works
-    console.log('Fetched projects:', projects);
-
-    // Render the EJS view and send both title and projects data
     res.render('projects', { title, projects });
   } catch (err) {
-    console.error('Error fetching projects:', err);
+    console.error('Error fetching upcoming projects:', err);
+    // CHANGE THIS LINE TEMPORARILY:
+    res.status(500).send(`<pre>${err.stack}</pre>`);
+  }
+});
+
+// New dynamic route for a single project details page
+app.get('/project/:id', async (req, res) => {
+  try {
+    const projectId = req.params.id;
+    const project = await getProjectDetails(projectId);
+    
+    if (!project) {
+      return res.status(404).send('Project not found');
+    }
+
+    res.render('project', {
+      title: project.title,
+      project: project
+    });
+  } catch (error) {
+    console.error('Error fetching project details:', error);
     res.status(500).send('Internal Server Error');
   }
 });
@@ -87,8 +80,6 @@ app.get('/categories', async (req, res) => {
   try {
     const categories = await getAllCategories();
     const title = 'Service Project Categories';
-    
-    console.log('Fetched categories:', categories); // Optional verification log
 
     res.render('categories', { title, categories });
   } catch (err) {
