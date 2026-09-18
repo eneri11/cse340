@@ -7,6 +7,14 @@
     <ul class="categories-list">
       <% categories.forEach(category => { %>
         <li><%= category.name %></li>
+        <% categories.forEach(category => { %>
+  <li>
+    <!-- Turn the category name into a link using its ID -->
+    <a href="/category/<%= category.category_id %>">
+      <%= category.category_name %>
+    </a>
+  </li>
+<% }) %>
       <% }) %>
     </ul>
   <% } else { %>

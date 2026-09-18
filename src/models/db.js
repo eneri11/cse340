@@ -12,6 +12,13 @@ const pool = new Pool({
   }
 });
 
+// Define the testConnection function
+export async function testConnection() {
+  const result = await pool.query('SELECT NOW()');
+  return result;
+}
+
+// Keep your existing default export for queries
 export default {
   query: (text, params) => pool.query(text, params),
 };

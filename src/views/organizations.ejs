@@ -1,22 +1,14 @@
-<%- include('partials/header', { title: title }) %>
-
+<%- include('partials/header') %>
 <main>
-    <h1>Our Partner Organizations</h1>
-    <p>We work closely with these amazing organizations to deliver community projects.</p>
-    
-    <div class="org-container">
-        <% if (organizations && organizations.length > 0) { %>
-            <% organizations.forEach(org => { %>
-                <div class="org-card">
-                    <!-- If you have an image column in your DB, you can use org.image, otherwise use a placeholder or remove it -->
-                    <h3><%= org.name %></h3>
-                    <p><%= org.description %></p>
-                </div>
-            <% }) %>
-        <% } else { %>
-            <p>No partner organizations available at this time.</p>
-        <% } %>
-    </div>
+    <h1><%= title %></h1>
+    <p>Here are a few of our partner organizations:</p>
+    <ul>
+        <% organizations.forEach(organization => { %>
+            <li>
+                <img src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
+                <a href="/organization/<%= organization.organization_id %>"><%= organization.name %></a>: <%= organization.contact_email %>
+            </li>
+        <% }); %>
+    </ul>
 </main>
-
 <%- include('partials/footer') %>

@@ -1,0 +1,19 @@
+<main>
+  <!-- Display the category name passed from the controller -->
+  <h1><%= title %></h1>
+
+  <% if (projects.length > 0) { %>
+    <ul class="project-list">
+      <% projects.forEach(project => { %>
+        <li>
+          <!-- Link each project to its project detail page -->
+          <a href="/project/<%= project.project_id %>">
+            <%= project.project_name %>
+          </a>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>No service projects found for this category.</p>
+  <% } %>
+</main>
