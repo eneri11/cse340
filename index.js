@@ -16,15 +16,13 @@ const NODE_ENV = process.env.NODE_ENV;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ---- Static Files Middleware ----
+// ---- Static Files Middleware (Crucial for CSS styling!) ----
 app.use(express.static('public'));
 
 // ---- View Engine and Templates Setup ----
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views"));
 
-// ---- Constants ----
-const NUMBER_OF_UPCOMING_PROJECTS = 5;
 // Step 1: Middleware to log all incoming requests
 app.use((req, res, next) => {
     if (NODE_ENV === 'development') {
@@ -39,11 +37,11 @@ app.use((req, res, next) => {
     next();
 });
 
-// Use the imported router to handle routes
+// Use the imported router to handle all application routes
 app.use(router);
 
 // Catch-all route for handling 404 errors
-app.use((req, res, next) => {  // <-- Added 'next' here
+app.use((req, res, next) => {  
   const err = new Error('Page Not Found');
   err.status = 404;
   next(err);
@@ -54,46 +52,18 @@ app.use((err, req, res, next) => {
     console.error('Error occurred:', err.message);
     console.error('Stack trace:', err.stack);
 
-     // Determine status and template
     const status = err.status || 500;
     const template = status === 404 ? '404' : '500';
 
-    // Prepare data for the template
     const context = {
         title: status === 404 ? 'Page Not Found' : 'Server Error',
         error: err.message,
         stack: err.stack,
-        NODE_ENV: process.env.NODE_ENV // <-- Add this line!
+        NODE_ENV: process.env.NODE_ENV
     };
 
-    // Render the appropriate error template
     res.status(status).render(`errors/${template}`, context);
 });
-
-// Updated /projects route using getUpcomingProjects and the constant
-
-
-// New dynamic route for a single project details page
-app.get('/project/:id', async (req, res) => {
-  try {
-    const projectId = req.params.id;
-    const project = await getProjectDetails(projectId);
-    
-    if (!project) {
-      return res.status(404).send('Project not found');
-    }
-
-    res.render('project', {
-      title: project.title,
-      project: project
-    });
-  } catch (error) {
-    console.error('Error fetching project details:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-
 
 // ---- Server Listener ----
 app.listen(port, () => {

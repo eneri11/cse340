@@ -1,24 +1,27 @@
-import { getUpcomingProjects, getProjectDetails } from '../models/projects.js';
+import { getAllProjects, getProjectDetails } from '../models/projects.js';
 
-const NUMBER_OF_UPCOMING_PROJECTS = 5;
+export const showProjectsPage = async (req, res) => {
+    try {
+        const projects = await getAllProjects();
+        res.render('projects', { title: 'Service Projects', projects });
+    } catch (error) {
+        console.error("Error loading projects page:", error);
+        res.status(500).render('error', { title: 'Error', error });
+    }
+};
 
-export async function showProjectsPage(req, res) {
-  try {
-    const projects = await getUpcomingProjects(NUMBER_OF_UPCOMING_PROJECTS);
-    res.render('projects', { title: "Upcoming Service Projects", projects });
-  } catch (err) {
-    console.error("Error loading projects page:", err);
-    res.status(500).send("Error loading projects page");
-  }
-}
+export const showProjectDetailsPage = async (req, res) => {
+    try {
+        const projectId = req.params.id;
+        const project = await getProjectDetails(projectId);
+        
+        if (!project) {
+            return res.status(404).render('404', { title: 'Project Not Found' });
+        }
 
-export async function showProjectDetailsPage(req, res) {
-  try {
-    const projectId = req.params.id;
-    const project = await getProjectDetails(projectId);
-    res.render('project', { title: project.title, project });
-  } catch (err) {
-    console.error("Error loading project details page:", err);
-    res.status(500).send("Error loading project details page");
-  }
-}
+        res.render('project', { title: project.title, project });
+    } catch (error) {
+        console.error("Error loading project details:", error);
+        res.status(500).render('error', { title: 'Error', error });
+    }
+};

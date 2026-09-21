@@ -1,5 +1,18 @@
 import pool from './db.js'; // or whatever your DB connection file is named
 
+import db from './db.js';
+
+export const getAllProjects = async () => {
+  const sql = `
+    SELECT p.project_id, p.title, p.description, p.date, p.location, 
+           p.organization_id, o.name AS organization_name
+    FROM project p
+    JOIN organization o ON p.organization_id = o.organization_id
+  `;
+  const result = await db.query(sql);
+  return result.rows;
+};
+
 // 1. Get upcoming projects with a JOIN to get the organization name
 export async function getUpcomingProjects(numberOfProjects) {
   const query = `
