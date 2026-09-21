@@ -1,22 +1,22 @@
-import { getAllOrganizations, getOrganizationDetails } from '../models/organizations.js';
-import { getProjectsByOrganizationId } from '../models/projects.js';
+import { getAllOrganizations, getOrganizationById } from '../models/organizations.js';
 
-// Controller to show all organizations
-const showOrganizationsPage = async (req, res) => {
-    const organizations = await getAllOrganizations();
-    const title = 'Partner Organizations';
-    res.render('organizations', { title, organizations });
+export const showOrganizationsPage = async (req, res) => {
+    try {
+        const organizations = await getAllOrganizations();
+        res.render('organizations', { title: 'Organizations', organizations });
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('error', { error });
+    }
 };
 
-// Controller to show details for a specific organization
-const showOrganizationDetailsPage = async (req, res) => {
-    const organizationId = req.params.id;
-    const organizationDetails = await getOrganizationDetails(organizationId);
-    const projects = await getProjectsByOrganizationId(organizationId);
-    const title = 'Organization Details';
-
-    res.render('organization', { title, organizationDetails, projects });
+export const showOrganizationDetailsPage = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const organization = await getOrganizationById(id);
+        res.render('organization-detail', { title: organization.name, organization });
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('error', { error });
+    }
 };
-
-// Export both controller functions
-export { showOrganizationsPage, showOrganizationDetailsPage };
