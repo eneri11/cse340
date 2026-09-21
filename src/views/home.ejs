@@ -1,12 +1,10 @@
-<%- include('partials/header', { title: title }) %>
-
-<main>
-    <h1>Welcome to Community Service Tracker</h1>
-    <p>Empowering local communities through service and collaboration.</p>
-    
-    <div class="hero-image">
-        <img src="/images/home-hero.jpg" alt="Community volunteers working together">
-    </div>
-</main>
-
-<%- include('partials/footer') %>
+export const showHomePage = async (req, res) => {
+    try {
+        res.render('home', { 
+            title: 'Welcome to Community Service Tracker' 
+        });
+    } catch (error) {
+        console.error("Error loading home page:", error);
+        res.status(500).render('error', { title: 'Error', error });
+    }
+};
