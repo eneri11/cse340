@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // ---- Static Files Middleware (Crucial for CSS styling!) ----
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ---- View Engine and Templates Setup ----
 app.set("view engine", "ejs");
