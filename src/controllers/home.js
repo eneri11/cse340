@@ -1,0 +1,10 @@
+export const showHomePage = async (req, res) => {
+    try {
+        res.render('index', { 
+            title: 'Welcome to Community Service Tracker' 
+        });
+    } catch (error) {
+        console.error("Error loading home page:", error);
+        res.status(500).render('error', { title: 'Error', error });
+    }
+};

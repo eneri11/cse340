@@ -1,32 +1,27 @@
-// Import any needed model functions
-import { getAllCategories } from '../models/categories.js';
+import { getAllCategories, getCategoryById } from '../models/categories.js';
 
-// Define any controller functions
-const showCategoriesPage = async (req, res) => {
-    const categories = await getAllCategories();
-    const title = 'Service Categories';
+export const showCategoriesPage = async (req, res) => {
+    try {
+        const categories = await getAllCategories();
+        res.render('categories', { title: 'Service Categories', categories });
+    } catch (error) {
+        console.error("Error loading categories page:", error);
+        res.status(500).render('error', { title: 'Error', error });
+    }
+};
 
-    res.render('categories', { title, categories });
-};  
+export const showCategoryDetailsPage = async (req, res) => {
+    try {
+        const categoryId = req.params.id;
+        const category = await getCategoryById(categoryId);
+        
+        if (!category) {
+            return res.status(404).render('404', { title: 'Category Not Found' });
+        }
 
-// Export any controller functions
-export { showCategoriesPage };
-
-async function buildCategoryDetails(req, res, next) {
-  const categoryId = req.params.id;
-  const category = await categoryModel.getCategoryById(categoryId);
-  const projects = await categoryModel.getProjectsByCategoryId(categoryId);
-
-  if (!category) {
-    // Trigger your 404 handler if the category doesn't exist
-    const err = new Error('Category not found');
-    err.status = 404;
-    return next(err);
-  }
-
-  res.render('category-detail', {
-    title: category.category_name,
-    category,
-    projects
-  });
-}
+        res.render('category-detail', { title: category.name, category });
+    } catch (error) {
+        console.error("Error loading category details:", error);
+        res.status(500).render('error', { title: 'Error', error });
+    }
+};
