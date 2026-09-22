@@ -2,6 +2,18 @@ import pool from './db.js'; // or whatever your DB connection file is named
 
 import db from './db.js';
 
+// Get all categories associated with a specific project ID
+export async function getCategoriesByProjectId(projectId) {
+  const query = `
+    SELECT c.category_id, c.category_name
+    FROM categories c
+    JOIN project_categories pc ON c.category_id = pc.category_id
+    WHERE pc.project_id = $1;
+  `;
+  const { rows } = await pool.query(query, [projectId]);
+  return rows;
+}
+
 export const getAllProjects = async () => {
   const sql = `
     SELECT p.project_id, p.title, p.description, p.date, p.location, 
