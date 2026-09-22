@@ -10,7 +10,7 @@ export async function getCategoriesByProjectId(projectId) {
     JOIN project_categories pc ON c.category_id = pc.category_id
     WHERE pc.project_id = $1;
   `;
-  const { rows } = await pool.query(query, [projectId]);
+  const { rows } = await db.query(query, [projectId]); // Use db.query instead of pool.query
   return rows;
 }
 
