@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<htm lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+
 export const showHomePage = async (req, res) => {
     try {
         res.render('home', { 
@@ -21,3 +30,5 @@ export const showHomePage = async (req, res) => {
 </main>
 
 <%- include('partials/footer') %>
+</body>
+</html>
