@@ -1,6 +1,7 @@
 /* ******************************************
  * Server.js - Primary file of the application
  ********************************************/
+import 'dotenv/config'; // Must be at the very top of your main entry file
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
