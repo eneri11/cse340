@@ -1,15 +1,15 @@
 import { getAllCategories, getCategoryById, getProjectsByCategoryId } from '../models/categories.js';
 
-export async function showCategoriesPage(req, res, next) {
+export const showCategoriesPage = async (req, res, next) => {
   try {
     const categories = await getAllCategories();
     res.render('categories', { title: 'Categories', categories });
   } catch (error) {
     next(error);
   }
-}
+};
 
-export async function showCategoryDetailsPage(req, res, next) {
+export const showCategoryDetailsPage = async (req, res, next) => {
   try {
     const categoryId = req.params.id;
     const category = await getCategoryById(categoryId);

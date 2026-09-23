@@ -1,17 +1,16 @@
 import { getAllProjects } from '../models/projects.js';
 
-export async function showProjectsPage(req, res, next) {
-  try {
-    const projects = await getAllProjects();
-    res.render('projects', { 
-      title: 'Service Projects', 
-      projects 
-    });
-  } catch (error) {
-    console.error("Error fetching projects:", error);
-    next(error); // This safely passes errors to your 500 handler
-  }
-}
+export const showProjectsPage = async (req, res, next) => {
+    try {
+        const projects = await getAllProjects();
+        res.render('projects', { 
+            title: 'Service Projects', 
+            projects 
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 
 // Controller for individual project details
 export async function showProjectDetailsPage(req, res, next) {
