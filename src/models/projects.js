@@ -1,5 +1,3 @@
-import pool from './db.js'; // or whatever your DB connection file is named
-
 import db from './db.js';
 
 // Get all categories associated with a specific project ID
@@ -10,7 +8,7 @@ export async function getCategoriesByProjectId(projectId) {
     JOIN project_categories pc ON c.category_id = pc.category_id
     WHERE pc.project_id = $1;
   `;
-  const { rows } = await pool.query(query, [projectId]); // // Match whatever your file uses (pool or db)
+  const { rows } = await db.query(query, [projectId]);
   return rows;
 }
 
@@ -35,7 +33,7 @@ export async function getUpcomingProjects(numberOfProjects) {
     ORDER BY p.date ASC
     LIMIT $1;
   `;
-  const { rows } = await pool.query(query, [numberOfProjects]);
+  const { rows } = await db.query(query, [numberOfProjects]);
   return rows;
 }
 
@@ -47,7 +45,7 @@ export async function getProjectDetails(id) {
     JOIN organizations o ON p.organization_id = o.organization_id
     WHERE p.project_id = $1;
   `;
-  const { rows } = await pool.query(query, [id]);
+  const { rows } = await db.query(query, [id]);
   return rows[0]; // Return the single project object
 }
 
@@ -59,6 +57,6 @@ export async function getProjectsByOrganizationId(organizationId) {
     WHERE organization_id = $1
     ORDER BY date ASC;
   `;
-  const { rows } = await pool.query(query, [organizationId]);
+  const { rows } = await db.query(query, [organizationId]);
   return rows;
 }
