@@ -1,4 +1,4 @@
-import db from './db.js'; // Ensure this matches your database import
+import pool from './db.js'; // Adjust this path/variable if your project uses db.js or another name
 
 // 1. Retrieve a single category by its ID
 export async function getCategoryById(categoryId) {
@@ -7,7 +7,7 @@ export async function getCategoryById(categoryId) {
     FROM categories
     WHERE category_id = $1;
   `;
-  const { rows } = await db.query(query, [categoryId]);
+  const { rows } = await pool.query(query, [categoryId]);
   return rows[0]; 
 }
 
@@ -20,6 +20,6 @@ export async function getProjectsByCategoryId(categoryId) {
     WHERE pc.category_id = $1
     ORDER BY p.date ASC;
   `;
-  const { rows } = await db.query(query, [categoryId]);
+  const { rows } = await pool.query(query, [categoryId]);
   return rows;
 }
