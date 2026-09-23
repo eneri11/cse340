@@ -1,8 +1,12 @@
 import db from './db.js';
 
-// Retrieve all projects
 export async function getAllProjects() {
-  const { rows } = await db.query('SELECT * FROM projects ORDER BY date ASC;');
+  const { rows } = await db.query(
+    `SELECT p.*, o.name AS organization_name 
+     FROM projects p
+     LEFT JOIN organizations o ON p.organization_id = o.organization_id
+     ORDER BY p.date ASC;`
+  );
   return rows;
 }
 

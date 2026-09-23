@@ -1,16 +1,16 @@
-import { getAllProjects, getProjectById, getCategoriesByProjectId } from '../models/projects.js';
+import { getAllProjects } from '../models/projects.js';
 
-// Controller to list projects (e.g., the upcoming five projects)
 export async function showProjectsPage(req, res, next) {
-    try {
-        const projects = await getAllProjects(); // or getUpcomingProjects() depending on your setup
-        res.render('projects', { 
-            title: 'Service Projects', 
-            projects 
-        });
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const projects = await getAllProjects();
+    res.render('projects', { 
+      title: 'Service Projects', 
+      projects 
+    });
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    next(error); // This safely passes errors to your 500 handler
+  }
 }
 
 // Controller for individual project details
