@@ -1,6 +1,6 @@
-import { getAllOrganizations, getOrganizationById } from '../models/organizations.js';
+import { getAllOrganizations, getOrganizationById, getProjectsByOrganizationId } from '../models/organizations.js';
 
-export const showOrganizationsPage = async (req, res) => {
+export const showOrganizationsPage = async (req, res, next) => {
     try {
         const organizations = await getAllOrganizations();
         res.render('organizations', { 
@@ -8,26 +8,27 @@ export const showOrganizationsPage = async (req, res) => {
             organizations 
         });
     } catch (error) {
-        console.error("Error loading organizations page:", error);
-        res.status(500).render('error', { title: 'Error', error });
+        next(error);
     }
 };
 
-export const showOrganizationDetailsPage = async (req, res) => {
+export const showOrganizationDetailsPage = async (req, res, next) => {
     try {
-        const orgId = req.params.id;
-        const organization = await getOrganizationById(orgId);
+        const organizationId = req.params.id;
+        const organization = await getOrganizationById(organizationId);
         
         if (!organization) {
-            return res.status(404).render('error', { title: 'Not Found', error: { message: 'Organization not found' } });
+            return res.status(404).render('404', { title: 'Organization Not Found' });
         }
 
-        res.render('organization-detail', { 
-            title: organization.name, 
-            organization 
+        const projects = await getProjectsByOrganizationId(organizationId);
+
+        res.render('organization-detail', { // Ensure this matches your EJS view filename
+            title: organization.organization_name || organization.name,
+            organization,
+            projects
         });
     } catch (error) {
-        console.error("Error loading organization details:", error);
-        res.status(500).render('error', { title: 'Error', error });
+        next(error);
     }
 };

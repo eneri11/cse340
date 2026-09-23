@@ -53,7 +53,7 @@ app.use((err, req, res, next) => {
     console.error('Stack trace:', err.stack);
 
     const status = err.status || 500;
-    const template = status === 404 ? '404' : '500';
+    const template = status === 404 ? '404' : '500'; // Looks for 404.ejs and 500.ejs directly in views
 
     const context = {
         title: status === 404 ? 'Page Not Found' : 'Server Error',
