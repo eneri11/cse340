@@ -1,6 +1,6 @@
 import db from './db.js';
 
-// Retrieve all organizations
+// 1. Retrieve all organizations
 export async function getAllOrganizations() {
   const query = `
     SELECT organization_id, organization_name, description, logo
@@ -11,7 +11,7 @@ export async function getAllOrganizations() {
   return rows;
 }
 
-// Retrieve a single organization by its ID
+// 2. Retrieve a single organization by ID
 export async function getOrganizationById(organizationId) {
   const query = `
     SELECT organization_id, organization_name, description, logo
@@ -22,7 +22,7 @@ export async function getOrganizationById(organizationId) {
   return rows[0];
 }
 
-// Retrieve all service projects for a given organization ID
+// 3. Retrieve all service projects for a given organization ID
 export async function getProjectsByOrganizationId(organizationId) {
   const query = `
     SELECT project_id, title, description, date, location, organization_id

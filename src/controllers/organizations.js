@@ -18,12 +18,12 @@ export const showOrganizationDetailsPage = async (req, res, next) => {
         const organization = await getOrganizationById(organizationId);
         
         if (!organization) {
-            return res.status(404).render('404', { title: 'Organization Not Found' });
+            return res.status(404).render('errors/404', { title: 'Organization Not Found' });
         }
 
         const projects = await getProjectsByOrganizationId(organizationId);
 
-        res.render('organization-detail', { // Ensure this matches your EJS view filename
+        res.render('organization-detail', { 
             title: organization.organization_name || organization.name,
             organization,
             projects
