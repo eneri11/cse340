@@ -1,34 +1,19 @@
 <main>
-  <% if (organization) { %>
-    <!-- Organization Header Details -->
-    <h1><%= organization.organization_name || organization.name %></h1>
-    
-    <% if (organization.description) { %>
-      <p><%= organization.description %></p>
-    <% endif %>
+  <h1><%= organization.name %></h1>
+  <p><%= organization.description %></p>
 
-    <h2>Service Projects</h2>
-
-    <!-- List of projects associated with this organization -->
-    <% if (projects && projects.length > 0) { %>
-      <ul>
-        <% projects.forEach(project => { %>
-          <li>
-            <a href="/project/<%= project.project_id %>">
-              <%= project.title %>
-            </a>
-            <% if (project.date) { %>
-              - <%= new Date(project.date).toLocaleDateString() %>
-            <% } %>
-          </li>
-        <% }) %>
-      </ul>
-    <% } else { %>
-      <p>No service projects found for this organization.</p>
-    <% } %>
-
+  <h2>Service Projects</h2>
+  <% if (projects && projects.length > 0) { %>
+    <ul>
+      <% projects.forEach(project => { %>
+        <li>
+          <a href="/project/<%= project.project_id %>">
+            <%= project.title %>
+          </a> - <%= project.date ? new Date(project.date).toLocaleDateString() : '' %> (<%= project.location %>)
+        </li>
+      <% }); %>
+    </ul>
   <% } else { %>
-    <h1>Organization Not Found</h1>
-    <p>The organization you are looking for does not exist.</p>
+    <p>No service projects available for this organization yet.</p>
   <% } %>
 </main>
