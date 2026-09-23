@@ -5,19 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
 </head>
+
 <body>
-
-export const showHomePage = async (req, res) => {
-    try {
-        res.render('home', { 
-            title: 'Welcome to Community Service Tracker' 
-        });
-    } catch (error) {
-        console.error("Error loading home page:", error);
-        res.status(500).render('error', { title: 'Error', error });
-    }
-};
-
 <%- include('partials/header', { title: title }) %>
 
 <main>
