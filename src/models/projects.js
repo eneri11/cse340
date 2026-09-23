@@ -1,62 +1,43 @@
 import db from './db.js';
 
-// Get all categories associated with a specific project ID
+// Retrieve all projects
+export async function getAllProjects() {
+  const { rows } = await db.query('SELECT * FROM projects ORDER BY date ASC;');
+  return rows;
+}
+
+// Retrieve a single project by its ID (along with organization details if needed)
+export async function getProjectById(projectId) {
+  const { rows } = await db.query(
+    `SELECT p.*, o.name AS organization_name, o.organization_id 
+     FROM projects p
+     LEFT JOIN organizations o ON p.organization_id = o.organization_id
+     WHERE p.project_id = $1;`,
+    [projectId]
+  );
+  return rows[0];
+}
+
+// Retrieve the next five upcoming service projects
+export async function getUpcomingProjects() {
+  const { rows } = await db.query(
+    `SELECT p.*, o.name AS organization_name, o.organization_id 
+     FROM projects p
+     LEFT JOIN organizations o ON p.organization_id = o.organization_id
+     WHERE p.date >= CURRENT_DATE
+     ORDER BY p.date ASC 
+     LIMIT 5;`
+  );
+  return rows;
+}
+
+// Retrieve all categories for a given project ID (for category tags)
 export async function getCategoriesByProjectId(projectId) {
-  const query = `
-    SELECT c.category_id, c.category_name
-    FROM categories c
-    JOIN project_categories pc ON c.category_id = pc.category_id
-    WHERE pc.project_id = $1;
-  `;
-  const { rows } = await db.query(query, [projectId]);
-  return rows;
-}
-
-export const getAllProjects = async () => {
-  const sql = `
-    SELECT p.project_id, p.title, p.description, p.date, p.location, 
-           p.organization_id, o.name AS organization_name
-    FROM project p
-    JOIN organization o ON p.organization_id = o.organization_id
-  `;
-  const result = await db.query(sql);
-  return result.rows;
-};
-
-// 1. Get upcoming projects with a JOIN to get the organization name
-export async function getUpcomingProjects(numberOfProjects) {
-  const query = `
-    SELECT p.project_id, p.title, p.description, p.date, p.location, p.organization_id, o.organization_name
-    FROM projects p
-    JOIN organizations o ON p.organization_id = o.organization_id
-    WHERE p.date >= CURRENT_DATE
-    ORDER BY p.date ASC
-    LIMIT $1;
-  `;
-  const { rows } = await db.query(query, [numberOfProjects]);
-  return rows;
-}
-
-// 2. Get a single project details by ID with a JOIN
-export async function getProjectDetails(id) {
-  const query = `
-    SELECT p.project_id, p.title, p.description, p.date, p.location, p.organization_id, o.organization_name
-    FROM projects p
-    JOIN organizations o ON p.organization_id = o.organization_id
-    WHERE p.project_id = $1;
-  `;
-  const { rows } = await db.query(query, [id]);
-  return rows[0]; // Return the single project object
-}
-
-// Get all projects associated with a specific organization ID
-export async function getProjectsByOrganizationId(organizationId) {
-  const query = `
-    SELECT project_id, title, description, date, location, organization_id
-    FROM projects
-    WHERE organization_id = $1
-    ORDER BY date ASC;
-  `;
-  const { rows } = await db.query(query, [organizationId]);
+  const { rows } = await db.query(
+    `SELECT c.* FROM categories c
+     JOIN projects p ON p.category_id = c.category_id
+     WHERE p.project_id = $1;`,
+    [projectId]
+  );
   return rows;
 }
