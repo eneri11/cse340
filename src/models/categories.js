@@ -1,4 +1,15 @@
-import db from './db.js'; // Correct path to your database connection
+import db from './db.js';
+
+// Retrieve all categories
+export async function getAllCategories() {
+  const query = `
+    SELECT category_id, category_name
+    FROM categories
+    ORDER BY category_name ASC;
+  `;
+  const { rows } = await db.query(query);
+  return rows;
+}
 
 // 1. Retrieve a single category by its ID
 export async function getCategoryById(categoryId) {
