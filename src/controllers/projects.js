@@ -1,4 +1,4 @@
-import { getAllProjects, getProjectDetails } from '../models/projects.js';
+import { getAllProjects, getProjectDetails, getCategoriesByProjectId } from '../models/projects.js';
 
 export const showProjectsPage = async (req, res) => {
     try {
@@ -19,7 +19,15 @@ export const showProjectDetailsPage = async (req, res) => {
             return res.status(404).render('404', { title: 'Project Not Found' });
         }
 
-        res.render('project', { title: project.title, project });
+        // Fetch categories/tags for this specific project
+        const categories = await getCategoriesByProjectId(projectId);
+
+        // Pass categories along with the project to your view
+        res.render('project', { 
+            title: project.title, 
+            project, 
+            categories 
+        });
     } catch (error) {
         console.error("Error loading project details:", error);
         res.status(500).render('error', { title: 'Error', error });

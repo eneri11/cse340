@@ -6,9 +6,9 @@
     <ul class="project-list">
       <% projects.forEach(project => { %>
         <li>
-          <!-- Link each project to its project detail page -->
+          <!-- Link each project to its project detail page using the correct column property -->
           <a href="/project/<%= project.project_id %>">
-            <%= project.project_name %>
+            <%= project.title %>
           </a>
         </li>
       <% }) %>
