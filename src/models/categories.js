@@ -1,7 +1,7 @@
 import db from './db.js';
 
 // Get all categories
-export async function getAllCategories() {
+export const getAllCategories = async () => {
     const { rows } = await db.query(
         `SELECT *
          FROM category
@@ -9,10 +9,10 @@ export async function getAllCategories() {
     );
 
     return rows;
-}
+};
 
 // Get one category by ID
-export async function getCategoryById(categoryId) {
+export const getCategoryById = async (categoryId) => {
     const { rows } = await db.query(
         `SELECT *
          FROM category
@@ -21,10 +21,10 @@ export async function getCategoryById(categoryId) {
     );
 
     return rows[0];
-}
+};
 
 // Get all projects for a category
-export async function getProjectsByCategoryId(categoryId) {
+export const getProjectsByCategoryId = async (categoryId) => {
     const { rows } = await db.query(
         `SELECT p.*
          FROM project p
@@ -36,10 +36,10 @@ export async function getProjectsByCategoryId(categoryId) {
     );
 
     return rows;
-}
+};
 
 // Get all categories for a project
-export async function getCategoriesByProjectId(projectId) {
+export const getCategoriesByProjectId = async (projectId) => {
     const { rows } = await db.query(
         `SELECT c.*
          FROM category c
@@ -51,4 +51,4 @@ export async function getCategoriesByProjectId(projectId) {
     );
 
     return rows;
-}
+};

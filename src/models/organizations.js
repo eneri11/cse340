@@ -1,7 +1,7 @@
 import db from './db.js';
 
 // Get all organizations
-export async function getAllOrganizations() {
+export const getAllOrganizations = async () => {
     const { rows } = await db.query(
         `SELECT organization_id,
                 name,
@@ -13,10 +13,10 @@ export async function getAllOrganizations() {
     );
 
     return rows;
-}
+};
 
 // Get one organization by ID
-export async function getOrganizationById(id) {
+export const getOrganizationById = async (id) => {
     const { rows } = await db.query(
         `SELECT organization_id,
                 name,
@@ -29,10 +29,10 @@ export async function getOrganizationById(id) {
     );
 
     return rows[0];
-}
+};
 
 // Get all projects for an organization
-export async function getProjectsByOrganizationId(organizationId) {
+export const getProjectsByOrganizationId = async (organizationId) => {
     const { rows } = await db.query(
         `SELECT project_id,
                 title,
@@ -46,4 +46,4 @@ export async function getProjectsByOrganizationId(organizationId) {
     );
 
     return rows;
-}
+};

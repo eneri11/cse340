@@ -20,17 +20,17 @@ export const showProjectsPage = async (req, res, next) => {
     }
 };
 
-export async function showProjectDetailsPage(req, res, next) {
+export const showProjectDetailsPage = async (req, res, next) => {
     try {
         const projectId = req.params.id;
 
         const project = await getProjectById(projectId);
 
         if (!project) {
-    return res.status(404).render('errors/404', {
-        title: 'Project Not Found'
-    });
-}
+            return res.status(404).render('errors/404', {
+                title: 'Project Not Found'
+            });
+        }
 
         const categories = await getCategoriesByProjectId(projectId);
 
@@ -42,4 +42,4 @@ export async function showProjectDetailsPage(req, res, next) {
     } catch (error) {
         next(error);
     }
-}
+};

@@ -1,7 +1,7 @@
 import db from './db.js';
 
 // Get all service projects
-export async function getAllProjects() {
+export const getAllProjects = async () => {
     const { rows } = await db.query(
         `SELECT p.*,
                 o.name AS organization_name,
@@ -13,10 +13,10 @@ export async function getAllProjects() {
     );
 
     return rows;
-}
+};
 
 // Get one project by ID
-export async function getProjectById(projectId) {
+export const getProjectById = async (projectId) => {
     const { rows } = await db.query(
         `SELECT p.*,
                 o.name AS organization_name,
@@ -29,10 +29,10 @@ export async function getProjectById(projectId) {
     );
 
     return rows[0];
-}
+};
 
 // Get the next five upcoming projects
-export async function getUpcomingProjects() {
+export const getUpcomingProjects = async () => {
     const { rows } = await db.query(
         `SELECT p.*,
                 o.name AS organization_name,
@@ -46,4 +46,4 @@ export async function getUpcomingProjects() {
     );
 
     return rows;
-}
+};
