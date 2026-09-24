@@ -1,23 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-</head>
-
-<body>
-<%- include('partials/header', { title: title }) %>
+<%- include('partials/header') %>
 
 <main>
-    <h1>Welcome to Community Service Tracker</h1>
-    <p>Empowering local communities through service and collaboration.</p>
+  <h1>Welcome to Community Service Tracker</h1>
 
-    <div class="hero-image">
-        <img src="/images/home-hero.png" alt="Community volunteers working together">
-    </div>
+  <p>Empowering local communities through service and collaboration.</p>
+
+  <div class="hero-image">
+    <img
+      src="/images/home-hero.png"
+      alt="Community volunteers working together"
+    />
+  </div>
 </main>
 
 <%- include('partials/footer') %>
-</body>
-</html>

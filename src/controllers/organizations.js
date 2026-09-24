@@ -20,7 +20,7 @@ export const showOrganizationDetailsPage = async (req, res, next) => {
         const organization = await getOrganizationById(orgId);
 
         if (!organization) {
-            return res.status(404).render('404', { title: 'Organization Not Found' });
+            return res.status(404).render('errors/404', { title: 'Organization Not Found' });
         }
 
         // Fetch projects belonging to this organization

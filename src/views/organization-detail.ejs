@@ -1,15 +1,22 @@
+<%- include('partials/header') %>
+
 <main>
   <h1><%= organization.name %></h1>
+
   <p><%= organization.description %></p>
 
   <h2>Service Projects</h2>
+
   <% if (projects && projects.length > 0) { %>
     <ul>
       <% projects.forEach(project => { %>
         <li>
           <a href="/project/<%= project.project_id %>">
             <%= project.title %>
-          </a> - <%= project.date ? new Date(project.date).toLocaleDateString() : '' %> (<%= project.location %>)
+          </a>
+          -
+          <%= project.date ? new Date(project.date).toLocaleDateString() : '' %>
+          (<%= project.location %>)
         </li>
       <% }); %>
     </ul>
@@ -17,3 +24,5 @@
     <p>No service projects available for this organization yet.</p>
   <% } %>
 </main>
+
+<%- include('partials/footer') %>

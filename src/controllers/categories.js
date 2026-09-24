@@ -15,7 +15,7 @@ export const showCategoryDetailsPage = async (req, res, next) => {
     const category = await getCategoryById(categoryId);
 
     if (!category) {
-      return res.status(404).render('404', { title: 'Category Not Found' });
+      return res.status(404).render('errors/404', { title: 'Category Not Found' });
     }
 
     const projects = await getProjectsByCategoryId(categoryId);

@@ -1,19 +1,33 @@
-<main>
-  <!-- Display the category name passed from the controller -->
-  <h1><%= title %></h1>
+<%- include('partials/header') %>
 
-  <% if (projects.length > 0) { %>
-    <ul class="project-list">
-      <% projects.forEach(project => { %>
-        <li>
-          <!-- Link each project to its project detail page using the correct column property -->
-          <a href="/project/<%= project.project_id %>">
-            <%= project.title %>
-          </a>
-        </li>
-      <% }) %>
-    </ul>
-  <% } else { %>
-    <p>No service projects found for this category.</p>
-  <% } %>
+<main class="category-detail-container">
+
+    <h1><%= category.name %></h1>
+
+    <h2>Service Projects</h2>
+
+    <% if (projects && projects.length > 0) { %>
+
+        <ul class="project-list">
+
+            <% projects.forEach(project => { %>
+
+                <li>
+                    <a href="/project/<%= project.project_id %>">
+                        <%= project.title %>
+                    </a>
+                </li>
+
+            <% }) %>
+
+        </ul>
+
+    <% } else { %>
+
+        <p>No service projects found for this category.</p>
+
+    <% } %>
+
 </main>
+
+<%- include('partials/footer') %>
