@@ -13,7 +13,10 @@ import { testErrorPage } from './controllers/errors.js';
 
 const router = express.Router();
 
-// Home route
+router.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
+
 router.get('/', showHomePage);
 
 // Organizations routes
