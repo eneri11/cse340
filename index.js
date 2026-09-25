@@ -11,6 +11,9 @@ import router from './src/routes.js';
 testConnection();
 
 const app = express();
+
+app.use(express.urlencoded({ extended: true }));
+
 const port = process.env.PORT || 5500;
 const NODE_ENV = process.env.NODE_ENV;
 

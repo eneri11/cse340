@@ -47,3 +47,38 @@ export const getUpcomingProjects = async () => {
 
     return rows;
 };
+
+// Update a service project
+export const updateProject = async (
+    projectId,
+    title,
+    description,
+    location,
+    date,
+    organizationId
+) => {
+    const { rows } = await db.query(
+        `UPDATE project
+         SET title = $1,
+             description = $2,
+             location = $3,
+             date = $4,
+             organization_id = $5
+         WHERE project_id = $6
+         RETURNING *;`,
+        [
+            title,
+            description,
+            location,
+            date,
+            organizationId,
+            projectId
+        ]
+    );
+
+    if (rows.length === 0) {
+        throw new Error('Project not found or could not be updated.');
+    }
+
+    return rows[0];
+};

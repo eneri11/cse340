@@ -3,6 +3,12 @@
 <main class="project-detail-container">
 
     <h1><%= project.title %></h1>
+    <a
+    href="/edit-project/<%= project.project_id %>"
+    class="edit-project-link"
+>
+    Edit Project
+</a>
 
     <p class="project-meta">
         <strong>Date:</strong>
