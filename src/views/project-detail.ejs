@@ -10,6 +10,13 @@
     Edit Project
 </a>
 
+<a
+    href="/project/<%= project.project_id %>/categories"
+    class="update-categories-link"
+>
+    Update Categories
+</a>
+
     <p class="project-meta">
         <strong>Date:</strong>
         <%= project.date ? new Date(project.date).toLocaleDateString() : 'TBD' %>

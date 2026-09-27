@@ -214,3 +214,131 @@ a:hover {
     background-color: #0c4a6e;
     color: #ffffff;
 }
+
+/* Edit Category Link */
+
+.edit-category-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    padding: 0.7rem 1.2rem;
+    background-color: #0369a1;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.edit-category-link:hover {
+    background-color: #0c4a6e;
+    color: #ffffff;
+}
+
+/* Flash Messages */
+
+.flash-message {
+    width: 90%;
+    max-width: 1000px;
+    margin: 1rem auto;
+    padding: 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.flash-success {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.flash-error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+/* Update Categories Link */
+
+.update-categories-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    margin-left: 0.5rem;
+    padding: 0.7rem 1.2rem;
+    background-color: #15803d;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.update-categories-link:hover {
+    background-color: #166534;
+    color: #ffffff;
+}
+
+/* Project Categories Page */
+
+.project-categories-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 2rem auto;
+}
+
+.project-categories-container h1 {
+    margin-bottom: 0.5rem;
+}
+
+.project-categories-container h2 {
+    margin-bottom: 0.5rem;
+}
+
+.project-categories-container p {
+    margin-bottom: 1.5rem;
+}
+
+.project-categories-container fieldset {
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.project-categories-container legend {
+    font-weight: 700;
+    padding: 0 0.5rem;
+}
+
+.category-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 1rem 0;
+}
+
+.category-checkbox input {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.category-checkbox label {
+    cursor: pointer;
+}
+
+/* Organization Links */
+
+.new-organization-link,
+.edit-organization-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    padding: 0.7rem 1.2rem;
+    background-color: #0369a1;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.new-organization-link:hover,
+.edit-organization-link:hover {
+    background-color: #0c4a6e;
+    color: #ffffff;
+}

@@ -2,8 +2,13 @@
 
 <main>
   <h1><%= organization.name %></h1>
-
   <p><%= organization.description %></p>
+<a
+    href="/edit-organization/<%= organization.organization_id %>"
+    class="edit-organization-link"
+>
+    Edit Organization
+</a>
 
   <h2>Service Projects</h2>
 

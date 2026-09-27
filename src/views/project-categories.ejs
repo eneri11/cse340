@@ -1,0 +1,68 @@
+<%- include('partials/header') %>
+
+<main class="project-categories-container">
+
+    <h1>Update Project Categories</h1>
+
+    <h2><%= project.title %></h2>
+
+    <p>
+        Select the categories that apply to this service project.
+    </p>
+
+    <form
+        action="/project/<%= project.project_id %>/categories"
+        method="POST"
+    >
+
+        <fieldset>
+
+            <legend>Available Categories</legend>
+
+            <% if (categories && categories.length > 0) { %>
+
+                <% categories.forEach(category => { %>
+
+                    <div class="category-checkbox">
+
+                        <input
+                            type="checkbox"
+                            id="category-<%= category.category_id %>"
+                            name="category_ids"
+                            value="<%= category.category_id %>"
+                            <%= assignedCategoryIds.includes(category.category_id) ? 'checked' : '' %>
+                        >
+
+                        <label for="category-<%= category.category_id %>">
+                            <%= category.name %>
+                        </label>
+
+                    </div>
+
+                <% }) %>
+
+            <% } else { %>
+
+                <p>No categories are available.</p>
+
+            <% } %>
+
+        </fieldset>
+
+        <div class="form-actions">
+
+            <button type="submit">
+                Save Categories
+            </button>
+
+            <a href="/project/<%= project.project_id %>">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</main>
+
+<%- include('partials/footer') %>

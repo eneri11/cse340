@@ -16,3 +16,15 @@
         <a href="/categories">Categories</a>
       </nav>
     </header>
+
+        <% if (success && success.length > 0) { %>
+      <div class="flash-message flash-success">
+        <%= success[0] %>
+      </div>
+    <% } %>
+
+    <% if (error && error.length > 0) { %>
+      <div class="flash-message flash-error">
+        <%= error[0] %>
+      </div>
+    <% } %>

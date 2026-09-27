@@ -1,8 +1,11 @@
 /* ******************************************
  * Server.js - Primary file of the application
  ********************************************/
-import 'dotenv/config'; // Must be at the very top of your main entry file
+import 'dotenv/config';
+
 import express from 'express';
+import session from 'express-session';
+import flash from 'connect-flash';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { testConnection } from './src/models/db.js';
@@ -13,6 +16,21 @@ testConnection();
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET || 'cse340-secret-key',
+        resave: false,
+        saveUninitialized: false
+    })
+);
+
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+});
 
 const port = process.env.PORT || 5500;
 const NODE_ENV = process.env.NODE_ENV;

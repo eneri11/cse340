@@ -1,6 +1,14 @@
 <%- include('partials/header') %>
 <main>
+
     <h1><%= title %></h1>
+
+    <a
+        href="/new-organization"
+        class="new-organization-link"
+    >
+        New Organization
+    </a>
     <p>Here are a few of our partner organizations:</p>
     <ul>
         <% organizations.forEach(organization => { %>
