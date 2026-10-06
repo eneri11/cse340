@@ -378,3 +378,21 @@ a:hover {
     background-color: #0c4a6e;
     color: #ffffff;
 }
+
+/* New Project Link */
+
+.new-project-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    padding: 0.7rem 1.2rem;
+    background-color: #0369a1;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.new-project-link:hover {
+    background-color: #0c4a6e;
+    color: #ffffff;
+}
