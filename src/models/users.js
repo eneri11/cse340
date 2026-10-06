@@ -65,3 +65,22 @@ export const findUserByEmail = async (email) => {
 export const verifyPassword = async (password, passwordHash) => {
     return await bcrypt.compare(password, passwordHash);
 };
+
+// Get all registered users with their roles
+export const getAllUsers = async () => {
+    const query = `
+        SELECT
+            u.user_id,
+            u.name,
+            u.email,
+            r.role_name
+        FROM users u
+        JOIN roles r
+            ON u.role_id = r.role_id
+        ORDER BY u.name ASC;
+    `;
+
+    const { rows } = await db.query(query);
+
+    return rows;
+};

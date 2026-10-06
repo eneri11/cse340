@@ -8,7 +8,10 @@ import {
     showLoginPage,
     processLogin,
     logout,
-    requireRole
+    requireRole,
+    requireLogin,
+    showUsersPage,
+    showDashboardPage
 } from './controllers/users.js';
 
 import {
@@ -57,6 +60,21 @@ router.get('/login', showLoginPage);
 router.post('/login', processLogin);
 
 router.get('/logout', logout);
+
+// Dashboard - requires login
+router.get(
+    '/dashboard',
+    requireLogin,
+    showDashboardPage
+);
+
+// Users page - admin only
+router.get(
+    '/users',
+    requireRole('admin'),
+    showUsersPage
+);
+
 
 // Organizations routes
 router.get('/organizations', showOrganizationsPage);

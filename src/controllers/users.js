@@ -1,7 +1,8 @@
 import {
     createUser,
     findUserByEmail,
-    verifyPassword
+    verifyPassword,
+    getAllUsers
 } from '../models/users.js';
 
 
@@ -136,7 +137,6 @@ export const logout = (req, res, next) => {
 // Middleware factory to require a specific role
 export const requireRole = (role) => {
     return (req, res, next) => {
-
         // Check if the user is logged in
         if (!req.session || !req.session.user) {
             req.flash(
@@ -160,4 +160,40 @@ export const requireRole = (role) => {
         // User has the required role
         next();
     };
+};
+
+
+// Middleware to require a logged-in user
+export const requireLogin = (req, res, next) => {
+    if (!req.session || !req.session.user) {
+        req.flash(
+            'error',
+            'You must be logged in to access this page.'
+        );
+
+        return res.redirect('/login');
+    }
+
+    next();
+};
+
+// Show the list of all registered users
+export const showUsersPage = async (req, res, next) => {
+    try {
+        const users = await getAllUsers();
+
+        res.render('users', {
+            title: 'Registered Users',
+            users
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Show the user dashboard
+export const showDashboardPage = (req, res) => {
+    res.render('dashboard', {
+        title: 'Dashboard'
+    });
 };
