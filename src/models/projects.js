@@ -82,3 +82,52 @@ export const updateProject = async (
 
     return rows[0];
 };
+
+// Create a new service project
+export const createProject = async (
+    title,
+    description,
+    location,
+    date,
+    organizationId
+) => {
+    if (!title || title.trim().length === 0) {
+        throw new Error('Project title is required.');
+    }
+
+    if (title.trim().length > 255) {
+        throw new Error('Project title must be 255 characters or less.');
+    }
+
+    if (!description || description.trim().length === 0) {
+        throw new Error('Project description is required.');
+    }
+
+    if (!location || location.trim().length === 0) {
+        throw new Error('Project location is required.');
+    }
+
+    if (!date) {
+        throw new Error('Project date is required.');
+    }
+
+    if (!organizationId) {
+        throw new Error('Organization is required.');
+    }
+
+    const { rows } = await db.query(
+        `INSERT INTO project
+            (title, description, location, date, organization_id)
+         VALUES ($1, $2, $3, $4, $5)
+         RETURNING *;`,
+        [
+            title.trim(),
+            description.trim(),
+            location.trim(),
+            date,
+            organizationId
+        ]
+    );
+
+    return rows[0];
+};

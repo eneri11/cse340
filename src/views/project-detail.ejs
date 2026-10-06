@@ -3,19 +3,23 @@
 <main class="project-detail-container">
 
     <h1><%= project.title %></h1>
-    <a
-    href="/edit-project/<%= project.project_id %>"
-    class="edit-project-link"
->
-    Edit Project
-</a>
+    <% if (user && user.role_name === 'admin') { %>
 
-<a
-    href="/project/<%= project.project_id %>/categories"
-    class="update-categories-link"
->
-    Update Categories
-</a>
+    <a
+        href="/edit-project/<%= project.project_id %>"
+        class="edit-project-link"
+    >
+        Edit Project
+    </a>
+
+    <a
+        href="/project/<%= project.project_id %>/categories"
+        class="update-categories-link"
+    >
+        Update Categories
+    </a>
+
+<% } %>
 
     <p class="project-meta">
         <strong>Date:</strong>

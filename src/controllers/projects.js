@@ -1,7 +1,8 @@
 import {
     getProjectById,
     getUpcomingProjects,
-    updateProject
+    updateProject,
+    createProject
 } from '../models/projects.js';
 
 import {
@@ -223,5 +224,70 @@ export const processUpdateProjectCategories = async (req, res, next) => {
         req.flash('error', error.message);
 
         res.redirect(`/project/${req.params.id}/categories`);
+    }
+};
+
+// Show the new project form
+export const showNewProjectForm = async (req, res, next) => {
+    try {
+        const organizations = await getAllOrganizations();
+
+        res.render('new-project', {
+            title: 'New Project',
+            organizations
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+// Process the new project form
+export const processNewProjectForm = async (req, res, next) => {
+    try {
+        const {
+            title,
+            description,
+            location,
+            date,
+            organization_id
+        } = req.body;
+
+        // Server-side validation
+        if (
+            !title ||
+            !description ||
+            !location ||
+            !date ||
+            !organization_id
+        ) {
+            req.flash(
+                'error',
+                'All project fields are required.'
+            );
+
+            return res.redirect('/new-project');
+        }
+
+        await createProject(
+            title,
+            description,
+            location,
+            date,
+            organization_id
+        );
+
+        req.flash(
+            'success',
+            'Project created successfully!'
+        );
+
+        res.redirect('/projects');
+
+    } catch (error) {
+        req.flash('error', error.message);
+
+        res.redirect('/new-project');
     }
 };
