@@ -5,6 +5,8 @@ import {
     getAllUsers
 } from '../models/users.js';
 
+import { getVolunteerProjects } from '../models/volunteers.js';
+
 
 // Show the registration page
 export const showRegisterPage = (req, res) => {
@@ -192,8 +194,17 @@ export const showUsersPage = async (req, res, next) => {
 };
 
 // Show the user dashboard
-export const showDashboardPage = (req, res) => {
-    res.render('dashboard', {
-        title: 'Dashboard'
-    });
+export const showDashboardPage = async (req, res, next) => {
+    try {
+        const volunteerProjects = await getVolunteerProjects(
+            req.session.user.user_id
+        );
+
+        res.render('dashboard', {
+            title: 'Dashboard',
+            volunteerProjects
+        });
+    } catch (error) {
+        next(error);
+    }
 };

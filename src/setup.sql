@@ -108,3 +108,24 @@ VALUES
 (3, 2), (4, 2), (5, 2),
 -- Education & Tech projects
 (11, 3), (12, 3), (13, 3), (14, 3), (15, 3);
+
+
+-- ========================================
+-- 5. Project Volunteer Junction Table
+-- ========================================
+CREATE TABLE public.project_volunteer (
+    project_id INT NOT NULL,
+    user_id INT NOT NULL,
+
+    PRIMARY KEY (project_id, user_id),
+
+    CONSTRAINT fk_volunteer_project
+        FOREIGN KEY (project_id)
+        REFERENCES public.project(project_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_volunteer_user
+        FOREIGN KEY (user_id)
+        REFERENCES public.users(user_id)
+        ON DELETE CASCADE
+);

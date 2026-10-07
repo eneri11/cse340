@@ -13,6 +13,12 @@ import {
 } from '../models/categories.js';
 
 import {
+    addVolunteer,
+    removeVolunteer,
+    isUserVolunteer
+} from '../models/volunteers.js';
+
+import {
     getAllOrganizations
 } from '../models/organizations.js';
 
@@ -43,11 +49,22 @@ export const showProjectDetailsPage = async (req, res, next) => {
 
         const categories = await getCategoriesByProjectId(projectId);
 
+        let isVolunteer = false;
+
+        if (req.session && req.session.user) {
+            isVolunteer = await isUserVolunteer(
+                req.session.user.user_id,
+                projectId
+            );
+        }
+
         res.render('project-detail', {
             title: project.title,
             project,
-            categories
+            categories,
+            isVolunteer
         });
+
     } catch (error) {
         next(error);
     }
@@ -289,5 +306,46 @@ export const processNewProjectForm = async (req, res, next) => {
         req.flash('error', error.message);
 
         res.redirect('/new-project');
+    }
+};
+
+// Add the logged-in user as a volunteer
+export const processVolunteerSignup = async (req, res, next) => {
+    try {
+        const projectId = req.params.id;
+        const userId = req.session.user.user_id;
+
+        await addVolunteer(userId, projectId);
+
+        req.flash(
+            'success',
+            'You are now volunteering for this project!'
+        );
+
+        res.redirect(`/project/${projectId}`);
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+// Remove the logged-in user as a volunteer
+export const processVolunteerRemoval = async (req, res, next) => {
+    try {
+        const projectId = req.params.id;
+        const userId = req.session.user.user_id;
+
+        await removeVolunteer(userId, projectId);
+
+        req.flash(
+            'success',
+            'You are no longer volunteering for this project.'
+        );
+
+        res.redirect(`/project/${projectId}`);
+
+    } catch (error) {
+        next(error);
     }
 };

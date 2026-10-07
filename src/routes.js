@@ -30,7 +30,9 @@ import {
     showEditProjectForm,
     processEditProjectForm,
     showUpdateProjectCategories,
-    processUpdateProjectCategories
+    processUpdateProjectCategories,
+    processVolunteerSignup,
+    processVolunteerRemoval
 } from './controllers/projects.js';
 
 import {
@@ -110,6 +112,19 @@ router.post(
 // Projects routes
 router.get('/projects', showProjectsPage);
 router.get('/project/:id', showProjectDetailsPage);
+
+// Volunteer routes - logged-in users only
+router.post(
+    '/project/:id/volunteer',
+    requireLogin,
+    processVolunteerSignup
+);
+
+router.post(
+    '/project/:id/volunteer/remove',
+    requireLogin,
+    processVolunteerRemoval
+);
 
 router.get(
     '/new-project',

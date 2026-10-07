@@ -16,16 +16,82 @@
     </p>
 
     <% if (user.role_name === 'admin') { %>
+
         <p>
             You have administrator access to manage organizations,
             projects, categories, and registered users.
         </p>
+
     <% } else { %>
+
         <p>
             You have access to your account and the public service
             information on this site.
         </p>
+
     <% } %>
+
+
+    <section class="volunteer-dashboard">
+
+        <h2>My Volunteer Projects</h2>
+
+        <% if (volunteerProjects && volunteerProjects.length > 0) { %>
+
+            <div class="volunteer-project-list">
+
+                <% volunteerProjects.forEach(project => { %>
+
+                    <article class="volunteer-project-card">
+
+                        <h3>
+                            <a href="/project/<%= project.project_id %>">
+                                <%= project.title %>
+                            </a>
+                        </h3>
+
+                        <p>
+                            <strong>Date:</strong>
+                            <%= project.date %>
+                        </p>
+
+                        <p>
+                            <strong>Location:</strong>
+                            <%= project.location %>
+                        </p>
+
+                        <% if (project.organization_name) { %>
+                            <p>
+                                <strong>Organization:</strong>
+                                <%= project.organization_name %>
+                            </p>
+                        <% } %>
+
+                        <form
+                            action="/project/<%= project.project_id %>/volunteer/remove"
+                            method="POST"
+                        >
+                            <button type="submit">
+                                Remove Me as a Volunteer
+                            </button>
+                        </form>
+
+                    </article>
+
+                <% }) %>
+
+            </div>
+
+        <% } else { %>
+
+            <p>
+                You are not currently volunteering for any projects.
+            </p>
+
+        <% } %>
+
+    </section>
+
 </main>
 
 <%- include('partials/footer') %>
